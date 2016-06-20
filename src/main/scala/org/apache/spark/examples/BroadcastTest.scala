@@ -27,9 +27,9 @@ object BroadcastTest {
   def main(args: Array[String]) {
 
     val bcName = if (args.length > 2) args(2) else "Http"
-    val blockSize = if (args.length > 3) args(3) else "4096"
+    val blockSize = if (args.length > 3) args(3) else "512"
 
-    val sparkConf = new SparkConf().setAppName("Broadcast Test")
+    val sparkConf = new SparkConf().setAppName("Broadcast Test").setMaster("spark://spark-master:7077").set("spark.executor.memory", "512m")
       .set("spark.broadcast.factory", s"org.apache.spark.broadcast.${bcName}BroadcastFactory")
       .set("spark.broadcast.blockSize", blockSize)
     val sc = new SparkContext(sparkConf)

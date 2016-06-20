@@ -25,8 +25,11 @@ import org.apache.spark._
 /** Computes an approximation to pi */
 object SparkPi {
   def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("Spark Pi").setMaster("local")
+    //master 和 exector 内存
+    val conf = new SparkConf().setAppName("Spark Pi").setMaster("spark://spark-master:7077").set("spark.executor.memory", "512m")
     val spark = new SparkContext(conf)
+    //本地打包的jar的位置  必备
+    spark.addJar("target/scala-2.10/spark-test_2.10-1.0.jar")
     val slices = if (args.length > 0) args(0).toInt else 2
     val n = math.min(100000L * slices, Int.MaxValue).toInt // avoid overflow
     val count = spark.parallelize(1 until n, slices).map { i =>
