@@ -1,4 +1,4 @@
-package com.ideal.netcare.test
+package com.ideal.netcare.test.graphx
 
 import org.apache.spark.graphx._
 import org.apache.spark.rdd.RDD
