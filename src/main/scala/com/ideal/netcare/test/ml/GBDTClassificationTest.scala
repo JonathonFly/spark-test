@@ -59,7 +59,7 @@ object GBDTClassificationTest {
 //    println("Learned classification GBT model:\n" + model.toDebugString)
 
 //    // 保存和加载模型
-//    model.save(sc, "target/tmp/myGradientBoostingClassificationModel")
-//    val sameModel = GradientBoostedTreesModel.load(sc, "target/tmp/myGradientBoostingClassificationModel")
+//    model.save(sc, "/hadoop/spark-model/myGradientBoostingClassificationModel")
+//    val sameModel = GradientBoostedTreesModel.load(sc, "/hadoop/spark-model/myGradientBoostingClassificationModel")
   }
 }
