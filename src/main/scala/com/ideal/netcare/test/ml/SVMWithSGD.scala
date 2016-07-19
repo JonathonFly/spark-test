@@ -17,8 +17,9 @@ object SVMWithSGDTest {
     sc.addJar("target/scala-2.10/spark-test_2.10-1.0.jar")
 
     //加载、解析训练、测试数据文件
+    //将sample_svm_data中的80%作为训练数据，20%作为测试数据
     //训练数据
-    val trainData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/sample_svm_train_data.txt")
+    val trainData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/.txt")
     val parsedTrainData = trainData.map { line =>
       val parts = line.split("\\s+")
       LabeledPoint(parts(0).toDouble, Vectors.dense(parts.tail.map(x => x.toDouble)))
