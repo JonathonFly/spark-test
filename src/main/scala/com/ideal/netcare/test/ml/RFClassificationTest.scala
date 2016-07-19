@@ -62,8 +62,8 @@ object RFClassificationTest {
 //    println("Learned classification forest model:\n" + model.toDebugString)
 
     //保存和加载模型
-    //  model.save(sc, "target/tmp/myRandomForestClassificationModel")
-    //val sameModel = RandomForestModel.load(sc, "target/tmp/myRandomForestClassificationModel")
+//    model.save(sc, "/hadoop/spark-model/myRandomForestClassificationModel")
+//    val sameModel = RandomForestModel.load(sc, "/hadoop/spark-model/myRandomForestClassificationModel")
   }
 
 }
