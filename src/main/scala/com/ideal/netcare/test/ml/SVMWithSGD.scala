@@ -19,13 +19,13 @@ object SVMWithSGDTest {
     //加载、解析训练、测试数据文件
     //训练数据
     val trainData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/sample_svm_train_data.txt")
-    val parsedTrainData=trainData.map { line =>
+    val parsedTrainData = trainData.map { line =>
       val parts = line.split("\\s+")
       LabeledPoint(parts(0).toDouble, Vectors.dense(parts.tail.map(x => x.toDouble)))
     }
     //测试数据
     val testData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/sample_svm_test_data.txt")
-    val parsedTestData=testData.map { line =>
+    val parsedTestData = testData.map { line =>
       val parts = line.split("\\s+")
       LabeledPoint(parts(0).toDouble, Vectors.dense(parts.tail.map(x => x.toDouble)))
     }
@@ -35,16 +35,16 @@ object SVMWithSGDTest {
     //20次迭代 ，分类错误率 trainErr = 0.390625
     //30次迭代 ，分类错误率 trainErr = 0.390625 算法已经收敛
     val numIterations = 20
-    val model=SVMWithSGD.train(parsedTrainData,numIterations)
+    val model = SVMWithSGD.train(parsedTrainData, numIterations)
 
     //模型预测测试数据结果
-    val labelAndPreds=parsedTestData.map{point=>
-      val prediction=model.predict(point.features)
-      (point.label,prediction)
+    val labelAndPreds = parsedTestData.map { point =>
+      val prediction = model.predict(point.features)
+      (point.label, prediction)
     }
 
     //计算分类错误率
-    val trainErr=labelAndPreds.filter(r=>r._1!=r._2).count.toDouble/parsedTestData.count
+    val trainErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / parsedTestData.count
     println(s"trainErr = ${trainErr}")
   }
 }
