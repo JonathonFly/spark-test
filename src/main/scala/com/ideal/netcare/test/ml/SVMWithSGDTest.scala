@@ -9,6 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Created by syf on 2016/7/19.
  */
 object SVMWithSGDTest {
+  //SGD:梯度下降法
   def main(args: Array[String]) {
     val conf = new SparkConf()
     conf.setAppName("Spark Dijkstra").setMaster("spark://spark-master:7077").set("spark.executor.memory", "512m")
