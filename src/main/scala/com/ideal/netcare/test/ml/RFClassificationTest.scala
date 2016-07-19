@@ -34,7 +34,7 @@ object RFClassificationTest {
     //训练模型
     val numClasses = 2
     val categoricalFeaturesInfo = Map[Int, Int]()
-    val numTrees = 3
+    val numTrees = 20
     val featureSubsetStrategy = "auto"
     val impurity = "gini"
     val maxDepth = 4
@@ -52,10 +52,10 @@ object RFClassificationTest {
     //计算分类错误率
     /*
     * RF和SVM和GBDT用的训练数据相同，测试数据也相同，
-    * RF         的 trainErr = 0.34375
-    * SVMWithSGD 的 trainErr = 0.390625
-    * GBDT       的 trainErr = 0.5
-    * 分类效果 ：随机森林(RF) > SVM > 梯度推进决策树(GBDT)
+    * RF         的 trainErr = 不确定
+    * SVMWithSGD 的 trainErr = 0.390625   迭代次数20
+    * GBDT       的 trainErr = 0.390625   迭代次数20
+    * 分类效果 ：随机森林(RF)不确定， SVM = 梯度推进决策树(GBDT)
     */
     val trainErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / parsedTestData.count
     println(s"trainErr = ${trainErr}")
