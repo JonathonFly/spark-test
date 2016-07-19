@@ -21,7 +21,7 @@ package org.apache.spark.examples.mllib
 import org.apache.spark.{SparkContext, SparkConf}
 // $example on$
 import org.apache.spark.mllib.tree.GradientBoostedTrees
-import org.apache.spark.mllib.tree.configuration.BoostingStrategy
+import org.apache.spark.mllib.tree.configuration.{Strategy, BoostingStrategy}
 import org.apache.spark.mllib.tree.model.GradientBoostedTreesModel
 import org.apache.spark.mllib.util.MLUtils
 // $example off$
@@ -40,11 +40,17 @@ object GradientBoostingClassificationExample {
     // Train a GradientBoostedTrees model.
     // The defaultParams for Classification use LogLoss by default.
     val boostingStrategy = BoostingStrategy.defaultParams("Classification")
-    boostingStrategy.numIterations = 3 // Note: Use more iterations in practice.
-    boostingStrategy.treeStrategy.numClasses = 2
-    boostingStrategy.treeStrategy.maxDepth = 5
-    // Empty categoricalFeaturesInfo indicates all features are continuous.
-    boostingStrategy.treeStrategy.categoricalFeaturesInfo = Map[Int, Int]()
+    boostingStrategy.setNumIterations(3)
+    val treeStrategy=Strategy.defaultStrategy("Classification")
+    treeStrategy.setNumClasses(2)
+    treeStrategy.setMaxDepth(5)
+    boostingStrategy.setTreeStrategy(treeStrategy)
+
+//    boostingStrategy.numIterations = 3 // Note: Use more iterations in practice.
+//    boostingStrategy.treeStrategy.numClasses = 2
+//    boostingStrategy.treeStrategy.maxDepth = 5
+//    // Empty categoricalFeaturesInfo indicates all features are continuous.
+//    boostingStrategy.treeStrategy.categoricalFeaturesInfo = Map[Int, Int]()
 
     val model = GradientBoostedTrees.train(trainingData, boostingStrategy)
 

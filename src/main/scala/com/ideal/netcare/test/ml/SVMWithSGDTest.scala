@@ -19,7 +19,7 @@ object SVMWithSGDTest {
     //加载、解析训练、测试数据文件
     //将sample_svm_data中的80%作为训练数据，20%作为测试数据
     //训练数据
-    val trainData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/.txt")
+    val trainData = sc.textFile("hdfs://spark-master:9000/syf/spark/data/ml/svm/sample_svm_train_data.txt")
     val parsedTrainData = trainData.map { line =>
       val parts = line.split("\\s+")
       LabeledPoint(parts(0).toDouble, Vectors.dense(parts.tail.map(x => x.toDouble)))
@@ -45,6 +45,13 @@ object SVMWithSGDTest {
     }
 
     //计算分类错误率
+    /*
+    * RF和SVM和GBDT用的训练数据相同，测试数据也相同，
+    * RF         的 trainErr = 0.34375
+    * SVMWithSGD 的 trainErr = 0.390625
+    * GBDT       的 trainErr = 0.5
+    * 分类效果 ：随机森林(RF) > SVM > 梯度推进决策树(GBDT)
+    */
     val trainErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / parsedTestData.count
     println(s"trainErr = ${trainErr}")
   }
