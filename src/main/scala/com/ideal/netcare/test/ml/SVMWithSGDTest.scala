@@ -12,7 +12,7 @@ object SVMWithSGDTest {
   //SGD:梯度下降法
   def main(args: Array[String]) {
     val conf = new SparkConf()
-    conf.setAppName("Spark Dijkstra").setMaster("spark://spark-master:7077").set("spark.executor.memory", "512m")
+    conf.setAppName("SVM with SGD Classification").setMaster("spark://spark-master:7077").set("spark.executor.memory", "512m")
     val sc = new SparkContext(conf)
     //本地打包的jar的位置  必备
     sc.addJar("target/scala-2.10/spark-test_2.10-1.0.jar")
@@ -35,8 +35,8 @@ object SVMWithSGDTest {
     //设置迭代次数并训练模型
     //10次迭代 ，分类错误率 trainErr = 0.40625
     //20次迭代 ，分类错误率 trainErr = 0.390625
-    //30次迭代 ，分类错误率 trainErr = 0.390625 算法已经收敛
-    val numIterations = 20
+    //50次迭代 ，分类错误率 trainErr = 0.375
+    val numIterations = 50
     val model = SVMWithSGD.train(parsedTrainData, numIterations)
 
     //模型预测测试数据结果
@@ -48,10 +48,9 @@ object SVMWithSGDTest {
     //计算分类错误率
     /*
     * RF和SVM和GBDT用的训练数据相同，测试数据也相同，
-    * RF         的 trainErr = 不确定
-    * SVMWithSGD 的 trainErr = 0.390625   迭代次数20
-    * GBDT       的 trainErr = 0.390625   迭代次数20
-    * 分类效果 ：随机森林(RF)不确定， SVM = 梯度推进决策树(GBDT)
+    * RF         的 trainErr = 0.328125   50棵分类树
+    * SVMWithSGD 的 trainErr = 0.375      迭代次数50
+    * GBDT       的 trainErr = 0.453125   迭代次数50
     */
     val trainErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / parsedTestData.count
     println(s"trainErr = ${trainErr}")

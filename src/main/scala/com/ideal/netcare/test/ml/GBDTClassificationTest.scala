@@ -32,7 +32,7 @@ object GBDTClassificationTest {
     }
 
     val boostingStrategy = BoostingStrategy.defaultParams("Classification")
-    boostingStrategy.setNumIterations(20)
+    boostingStrategy.setNumIterations(50)
     val treeStrategy=Strategy.defaultStrategy("Classification")
     treeStrategy.setNumClasses(2)
     treeStrategy.setMaxDepth(4)
@@ -50,10 +50,9 @@ object GBDTClassificationTest {
     //计算分类错误率
     /*
     * RF和SVM和GBDT用的训练数据相同，测试数据也相同，
-    * RF         的 trainErr = 不确定
-    * SVMWithSGD 的 trainErr = 0.390625   迭代次数20
-    * GBDT       的 trainErr = 0.390625   迭代次数20
-    * 分类效果 ：随机森林(RF)不确定， SVM = 梯度推进决策树(GBDT)
+    * RF         的 trainErr = 0.328125   50棵分类树
+    * SVMWithSGD 的 trainErr = 0.375      迭代次数50
+    * GBDT       的 trainErr = 0.453125   迭代次数50
     */
     val trainErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / parsedTestData.count()
     println(s"trainErr = ${trainErr}")
