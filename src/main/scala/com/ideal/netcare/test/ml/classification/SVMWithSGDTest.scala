@@ -1,4 +1,4 @@
-package com.ideal.netcare.test.ml
+package com.ideal.netcare.test.ml.classification
 
 import org.apache.spark.mllib.classification.SVMWithSGD
 import org.apache.spark.mllib.linalg.Vectors

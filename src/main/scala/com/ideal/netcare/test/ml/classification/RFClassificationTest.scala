@@ -1,4 +1,4 @@
-package com.ideal.netcare.test.ml
+package com.ideal.netcare.test.ml.classification
 
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
