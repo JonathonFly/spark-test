@@ -1,4 +1,4 @@
-package com.ideal.netcare.test.ml
+package com.ideal.netcare.test.test
 
 import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
