@@ -45,7 +45,7 @@ object Dijkstra extends Logging {
     val initialGraph = graph.mapVertices((id, attr) => if (id == sourceId) (0.0, attr._2, sourceName) else (Double.PositiveInfinity, attr._2, sourceName))
     initialGraph.cache()
 
-    val sssp = initialGraph.pregel((Double.PositiveInfinity, "", ""))(
+    val sssp = initialGraph.pregel((Double.PositiveInfinity, "", sourceName))(
       (id, dist, newDist) => {
         if (dist._1 < newDist._1) dist else (newDist._1, dist._2, newDist._3)
       }, // Vertex Program
@@ -61,6 +61,6 @@ object Dijkstra extends Logging {
         if (a._1 < b._1) a else b
       } // Merge Message
     )
-    println(sssp.vertices.map(_._2).collect.mkString("\n"))
+    println(sssp.vertices.map(_._2).collect.sortBy(_._2).mkString("\n"))
   }
 }
